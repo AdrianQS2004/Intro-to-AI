@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-df = pd.read_csv("credit_delinquency.csv", header=0)
+df = pd.read_csv("credit_delinquency_v2.csv", header=0)
 
 # Print the dataframe info
 print(df.info())
