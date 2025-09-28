@@ -15,22 +15,28 @@ df = pd.read_csv("credit_delinquency_v2.csv", header=0)
 # Print the dataframe info
 print(df.info())
 
-# Plot histograms of all numerical columns
-for col in df.select_dtypes(exclude='object').columns:
-
-    # If the colum is binary, or has few unique values, plot a bar chart instead
-    if df[col].nunique() < 10:
-        pd.value_counts(df[col]).plot.barh()
-        plt.title(col)
-        plt.show()
-    else:
-        # Plot a full histogram
+# Show histograms of the “C”, “0” and “1” ratio columns
+ratio_cols = ['Frac_C', 'Frac_0', 'Frac_1']
+for col in ratio_cols:
+    if col in df.columns:
         df.hist(column=[col], bins=50)
-        plt.title(col)
+        plt.title(f'Histogram of {col}')
+        plt.xlabel(col)
+        plt.ylabel('Count')
         plt.show()
 
-# Plot bar chart of counts in categorical columns
-for col in df.select_dtypes(include='object').columns:
-    pd.value_counts(df[col]).plot.barh()
-    plt.title(col)
-    plt.show()
+# Show bar plots of the delinquency rate for customers in different intervals of these ratio columns
+for col in ratio_cols:
+    if col in df.columns:
+        # Bin the ratio column into intervals
+        bins = np.linspace(0, 1, 11)  # 10 bins from 0 to 1
+        df[f'{col}_bin'] = pd.cut(df[col], bins=bins, include_lowest=True)
+        # Calculate mean delinquency rate per bin
+        delinquency_rate = df.groupby(f'{col}_bin')['Delinquent'].mean()
+        delinquency_rate.plot.bar()
+        plt.title(f'Delinquency Rate by {col} Interval')
+        plt.xlabel(f'{col} Interval')
+        plt.ylabel('Delinquency Rate')
+        plt.show()
+        df.drop(columns=[f'{col}_bin'], inplace=True)
+
