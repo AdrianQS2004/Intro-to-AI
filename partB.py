@@ -19,10 +19,9 @@ print(df.info())
 ratio_cols = ['Frac_C', 'Frac_0', 'Frac_1']
 for col in ratio_cols:
     if col in df.columns:
-        df.hist(column=[col], bins=50)
+        df.hist(column=[col], bins=30)
         plt.title(f'Histogram of {col}')
         plt.xlabel(col)
-        plt.ylabel('Count')
         plt.show()
 
 # Show bar plots of the delinquency rate for customers in different intervals of these ratio columns
