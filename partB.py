@@ -36,6 +36,7 @@ for col in ratio_cols:
         plt.title(f'Delinquency Rate by {col} Interval')
         plt.xlabel(f'{col} Interval')
         plt.ylabel('Delinquency Rate')
+        plt.xticks(rotation=30)
         plt.show()
         df.drop(columns=[f'{col}_bin'], inplace=True)
 
