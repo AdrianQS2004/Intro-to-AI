@@ -1,8 +1,6 @@
-# Program to create the 'delinquent' label in the application_record_clean1.csv
-# based on the credit_record.csv data.
-# By Juan Carlos Rojas, Texas Tech University
-# With help from ChatGPT
-
+# Introduction to AI Homework 4
+# Part A
+# By Keisy Nunez and Adrian Quiros
 
 import pandas as pd
 
@@ -55,7 +53,7 @@ print("Delinquent counts:\n", app_df['Delinquent'].value_counts())
 # Drop the ID column (no longer needed)
 app_df.drop(columns=[app_id_col], inplace=True)
 
-# Save the result if needed
+# Save the result
 app_df.to_csv('credit_delinquency_v2.csv', index=False)
 
 print(app_df.head())

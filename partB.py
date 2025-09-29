@@ -1,13 +1,11 @@
-# Introduction to Artificial Intelligence
-# Credit Delinquency Dataset
-# Exploration of variables
-# By Juan Carlos Rojas
-# Copyright 2025, Texas Tech University - Costa Rica
+# Introduction to AI Homework 4
+# Part B
+# By Keisy Nunez and Adrian Quiros
+
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Load the dataset
 df = pd.read_csv("credit_delinquency_v2.csv", header=0)
@@ -28,7 +26,7 @@ for col in ratio_cols:
 for col in ratio_cols:
     if col in df.columns:
         # Bin the ratio column into intervals
-        bins = np.linspace(0, 1, 11)  # 10 bins from 0 to 1
+        bins = np.linspace(0, 1, 20)  # 10 bins from 0 to 1
         df[f'{col}_bin'] = pd.cut(df[col], bins=bins, include_lowest=True)
         # Calculate mean delinquency rate per bin
         delinquency_rate = df.groupby(f'{col}_bin')['Delinquent'].mean()
@@ -36,7 +34,7 @@ for col in ratio_cols:
         plt.title(f'Delinquency Rate by {col} Interval')
         plt.xlabel(f'{col} Interval')
         plt.ylabel('Delinquency Rate')
-        plt.xticks(rotation=30)
+        plt.xticks(rotation=45)
         plt.show()
         df.drop(columns=[f'{col}_bin'], inplace=True)
 
