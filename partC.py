@@ -39,6 +39,12 @@ print("Iterations used: ", model.n_iter_)
 print("Intercept: ", model.intercept_)
 print("Coeffs: \n", model.coef_)
 
+# Map coefficients to column names (sorted by abs coefficient value)
+print("\nTop Ten Input Columns (sorted by coefficient absolute value):")
+coef_dict = dict(zip(cols, model.coef_[0]))
+for feature, coef in sorted(coef_dict.items(), key=lambda x: abs(x[1]), reverse=True)[:10]:
+    print(f"{feature}: {coef:.6f}")
+
 # Get the prediction probabilities
 pred_proba = model.predict_proba(test_data[cols])[:,1]
 
@@ -50,7 +56,7 @@ plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
 plt.legend(loc="center right")
 plt.xlabel("Threshold")
 plt.axis([0.0, 1.0, 0.0, 1.0])
-plt.show()
+# plt.show()
 
 # Plot a ROC curve (Receiver Operating Characteristic)
 fpr, tpr, _ = sklearn.metrics.roc_curve(test_labels, pred_proba)
@@ -58,16 +64,16 @@ plt.plot(fpr,tpr)
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver Operating Characteristic')
-plt.show()
+# plt.show()
 
 # Compute the area under the ROC curve (ROC AUC)
 auc_score = sklearn.metrics.roc_auc_score(test_labels, pred_proba)
-print("Test AUC score: {:.4f}".format(auc_score))
+# print("Test AUC score: {:.4f}".format(auc_score))
 
 # Compute ROC AUC against training data
 pred_proba_training = model.predict_proba(train_data[cols])[:,1]
 
 auc_score_training = sklearn.metrics.roc_auc_score(\
     train_labels, pred_proba_training)
-print("Train AUC score: {:.4f}".format(auc_score_training))
+# print("Train AUC score: {:.4f}".format(auc_score_training))
 
